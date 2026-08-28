@@ -17,7 +17,7 @@
 
 from libcpp.string cimport string
 from libcpp.vector cimport vector
-from libcpp.list cimport list
+from libcpp.list cimport list as cpp_list
 from libcpp.pair cimport pair
 from libc.time cimport time_t, tm, mktime
 
@@ -34,13 +34,13 @@ print("*** Looking to run more advanced attribution? Try ChannelAttribution Pro 
 print("Version: " + str(__version))
 
 cdef extern from "functions.h":
-    pair[vector[string], list[vector[double]]] heuristic_models_cpp(vector[string]&, vector[unsigned long int]&, vector[double]&, string sep);
+    pair[vector[string], cpp_list[vector[double]]] heuristic_models_cpp(vector[string]&, vector[unsigned long int]&, vector[double]&, string sep);
             
-    list[vector[double]] choose_order_cpp(vector[string]& vy, vector[unsigned long int]& vc, vector[unsigned long int]& vn, unsigned long int max_order, string sep, unsigned long int ncore, unsigned long int roc_npt);
+    cpp_list[vector[double]] choose_order_cpp(vector[string]& vy, vector[unsigned long int]& vc, vector[unsigned long int]& vn, unsigned long int max_order, string sep, unsigned long int ncore, unsigned long int roc_npt);
     
-    pair[list[vector[string]], list[vector[double]]] markov_model_cpp(vector[string]& vy, vector[unsigned long int]& vc, vector[double]& vv, vector[unsigned long int]& vn, unsigned long int order, unsigned long int nsim_start,  unsigned long int max_step, unsigned long int out_more, string sep, unsigned long int ncore, unsigned long int nfold, unsigned long int seed, double conv_par, double rate_step_sim, int verbose);
+    pair[cpp_list[vector[string]], cpp_list[vector[double]]] markov_model_cpp(vector[string]& vy, vector[unsigned long int]& vc, vector[double]& vv, vector[unsigned long int]& vn, unsigned long int order, unsigned long int nsim_start,  unsigned long int max_step, unsigned long int out_more, string sep, unsigned long int ncore, unsigned long int nfold, unsigned long int seed, double conv_par, double rate_step_sim, int verbose);
     
-    pair[list[vector[string]], vector[double]] transition_matrix_cpp(vector[string]& vy, vector[unsigned long int]& vc, vector[unsigned long int]& vn, unsigned long int order, string sep, int flg_equal)
+    pair[cpp_list[vector[string]], vector[double]] transition_matrix_cpp(vector[string]& vy, vector[unsigned long int]& vc, vector[unsigned long int]& vn, unsigned long int order, string sep, int flg_equal)
 
 def __heuristic_models_1(vector[string] vy, vector[unsigned long int] vc, vector[double] vv, string sep):
     return(heuristic_models_cpp(vy,vc,vv,sep))
